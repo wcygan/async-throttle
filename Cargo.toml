@@ -2,5 +2,25 @@
 name = "async-throttle"
 version = "0.3.0"
 edition = "2021"
+authors = ["Will Cygan <wcygan.io@gmail.com>"]
+description = "Asynchronous Rate Limiting"
+categories = ["asynchronous", "concurrency"]
+keywords = ["async", "asynchronous", "rate-limit", "throttle"]
+repository = "https://github.com/wcygan/async-throttle"
+homepage = "https://github.com/wcygan/async-throttle"
+license = "MIT"
+exclude = ["/.github"]
+
+[[test]]
+name = "test"
+path = "test/test.rs"
 
 [dependencies]
+tokio = { version = "1.27.0", features = ["time", "sync"] }
+dashmap = "5.4.0"
+backoff = { version = "0.4.0", features = ["tokio"] }
+
+[dev-dependencies]
+tokio = { version = "1.27.0", features = ["full"] }
+anyhow = "1.0.70"
+futures = "0.3.27"

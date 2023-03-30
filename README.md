@@ -4,6 +4,7 @@
 [<img alt="crates.io" src="https://img.shields.io/crates/v/async-throttle.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/async-throttle)
 [<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-async--throttle-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/async-throttle)
 [<img alt="build status" src="https://img.shields.io/github/actions/workflow/status/wcygan/async-throttle/test.yml?branch=main&style=for-the-badge" height="20">](https://github.com/wcygan/async-throttle/actions?query=branch%3Amain)
+[![codecov](https://codecov.io/github/wcygan/async-throttle/branch/main/graph/badge.svg?token=FW4Z2BUX1J)](https://codecov.io/github/wcygan/async-throttle)
 
 Asynchronous Rate Limiting
 
@@ -15,7 +16,7 @@ Add this to your Cargo.toml:
 
 ```toml
 [dependencies]
-async-throttle = "0.3.0"
+async-throttle = "0.3.1"
 ```
 
 You can use the fine-grained rate limiter like so:

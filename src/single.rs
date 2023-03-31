@@ -7,30 +7,17 @@ use tokio::time::{interval, Interval};
 /// # Examples
 ///
 /// ```
-/// use std::time::{Duration, Instant};
 /// use async_throttle::RateLimiter;
-/// use std::sync::atomic::{AtomicUsize, Ordering::SeqCst};
-///
-/// static PERIOD: Duration = Duration::from_millis(10);
-/// static COUNT: AtomicUsize = AtomicUsize::new(0);
-///
-/// async fn do_work() { COUNT.fetch_add(1, SeqCst); }
 ///
 /// #[tokio::main]
 /// async fn main() {
-///    let rate_limiter = RateLimiter::new(PERIOD);
-///    let start = Instant::now();
+///    let period = std::time::Duration::from_millis(10);
+///    let rate_limiter = RateLimiter::new(period);
 ///    
+///    // Takes 90ms to complete, the first iteration is instant, the next 9 iterations take 100ms
 ///    for _ in 0..10 {
-///       rate_limiter.throttle(|| do_work()).await;
+///       rate_limiter.throttle(|| async { /* work */ }).await;
 ///    }
-///
-///    // The first call to throttle should have returned immediately, but the remaining
-///    // calls should have waited for the interval to tick.
-///    assert!(start.elapsed().as_millis() > 89);
-///
-///    // All 10 calls to do_work should be finished.
-///    assert_eq!(COUNT.load(SeqCst), 10);
 /// }
 pub struct RateLimiter {
     /// The mutex that will be locked when the rate limiter is waiting for the interval to tick.

@@ -16,7 +16,7 @@ Add this to your Cargo.toml:
 
 ```toml
 [dependencies]
-async-throttle = "0.3.1"
+async-throttle = "0.3.2"
 ```
 
 You can use the fine-grained rate limiter like so:

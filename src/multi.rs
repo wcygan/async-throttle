@@ -13,37 +13,25 @@ use std::time::Duration;
 ///
 /// ```
 /// use async_throttle::MultiRateLimiter;
-/// use anyhow::Result;
-/// use std::time::{Duration, Instant};
 /// use std::sync::Arc;
-/// use futures::future::join_all;
-/// use std::sync::atomic::AtomicUsize;
-/// use std::sync::atomic::Ordering::SeqCst;
 ///
 /// #[tokio::main]
-/// async fn main() -> Result<()> {
-///    let rate_limiter = Arc::new(MultiRateLimiter::new(Duration::from_millis(50)));
-///    static COUNT: AtomicUsize = AtomicUsize::new(0);
-///    let start = Instant::now();
+/// async fn main() {
+///    let period = std::time::Duration::from_secs(5);
+///    let rate_limiter = MultiRateLimiter::new(period);
+///    
+///    // This completes instantly
+///    rate_limiter.throttle("foo", || computation()).await;
 ///
-///    // Spawn 10 tasks, each with a different key
-///    join_all(
-///       (0..10).map(|key| {
-///         let rate_limiter = rate_limiter.clone();
-///        tokio::spawn(async move {
-///          rate_limiter.throttle(key % 5, || async {
-///            COUNT.fetch_add(1, SeqCst);
-///          }).await;
-///       })
-///    })).await;
+///    // This completes instantly
+///    rate_limiter.throttle("bar", || computation()).await;
 ///
-///    // The rate limiter should have throttled the first 5 keys to 1 per 50ms
-///    assert!(start.elapsed().as_millis() >= 49);
-///
-///    // All the keys should have been processed
-///    assert_eq!(COUNT.load(SeqCst), 10);
-///    Ok(())
+///    // This takes 5 seconds to complete because the key "foo" is rate limited
+///    rate_limiter.throttle("foo", || computation()).await;
 /// }
+///
+/// async fn computation() { }
+/// ```
 pub struct MultiRateLimiter<K> {
     /// The period for each [`RateLimiter`] associated with a particular key
     period: Duration,

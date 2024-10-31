@@ -14,7 +14,7 @@ use tokio::time::{interval, Interval};
 ///     let period = std::time::Duration::from_millis(10);
 ///     let rate_limiter = RateLimiter::new(period);
 ///
-///     // Takes 90ms to complete, the first iteration is instant, the next 9 iterations take 100ms
+///     // Takes 90ms to complete, the first iteration is instant, the next 9 iterations take 10ms
 ///     for _ in 0..10 {
 ///        rate_limiter.throttle(|| async { /* work */ }).await;
 ///     }

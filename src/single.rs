@@ -11,13 +11,13 @@ use tokio::time::{interval, Interval};
 ///
 /// #[tokio::main]
 /// async fn main() {
-///    let period = std::time::Duration::from_millis(10);
-///    let rate_limiter = RateLimiter::new(period);
-///    
-///    // Takes 90ms to complete, the first iteration is instant, the next 9 iterations take 100ms
-///    for _ in 0..10 {
-///       rate_limiter.throttle(|| async { /* work */ }).await;
-///    }
+///     let period = std::time::Duration::from_millis(10);
+///     let rate_limiter = RateLimiter::new(period);
+///
+///     // Takes 90ms to complete, the first iteration is instant, the next 9 iterations take 100ms
+///     for _ in 0..10 {
+///        rate_limiter.throttle(|| async { /* work */ }).await;
+///     }
 /// }
 pub struct RateLimiter {
     /// The mutex that will be locked when the rate limiter is waiting for the interval to tick.
@@ -65,7 +65,7 @@ impl RateLimiter {
     /// async fn do_work() { /* some computation */ }
     ///
     /// async fn do_throttle(limiter: Arc<RateLimiter>) {
-    ///    limiter.throttle(|| do_work()).await
+    ///     limiter.throttle(|| do_work()).await
     /// }
     pub async fn throttle<Fut, F, T>(&self, f: F) -> T
     where
